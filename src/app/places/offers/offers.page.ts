@@ -18,5 +18,4 @@ export class OffersPage implements OnInit {
   ionViewDidEnter() {
     this.loadedPlaces = this.placesService.places;
   }
-
 }
