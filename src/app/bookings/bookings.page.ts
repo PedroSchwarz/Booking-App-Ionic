@@ -20,6 +20,7 @@ export class BookingsPage implements OnInit {
   }
 
   onDeleteBooking(bookingId: string) {
+    console.log(bookingId);
     return;
   }
 }
