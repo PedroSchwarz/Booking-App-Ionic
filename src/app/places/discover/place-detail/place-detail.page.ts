@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
+import { NavController, ModalController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { PlacesService } from '../../places.service';
 import { Place } from '../../place.model';
 import { CreateBookingComponent } from 'src/app/bookings/create-booking/create-booking.component';
 import { Subscription } from 'rxjs';
+import { BookingsService } from 'src/app/bookings/bookings.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-place-detail',
@@ -13,14 +15,18 @@ import { Subscription } from 'rxjs';
 })
 export class PlaceDetailPage implements OnInit, OnDestroy {
   place: Place;
+  isBookable = false;
   placeSub: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private placesService: PlacesService,
+    private authService: AuthService,
+    private bookingsService: BookingsService,
     private navCtrl: NavController,
     private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private loadingCtrl: LoadingController
     ) { }
 
   ngOnInit() {
@@ -32,6 +38,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
       const placeId = paramMap.get('placeId');
       this.placeSub = this.placesService.singlePlace(placeId).subscribe(place => {
         this.place = place;
+        this.isBookable = this.place.userId !== this.authService.userId;
       });
     });
   }
@@ -78,7 +85,23 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
     })
     .then(resultData => {
       if (resultData.role === 'confirm') {
-        console.log('Booked');
+        this.loadingCtrl.create({
+          message: 'Booking...'
+        }).then(loadingEl => {
+          loadingEl.present();
+          const data = resultData.data.bookingData;
+          this.bookingsService.addBooking(
+            this.place.id,
+            this.place.title,
+            this.place.imageUrl,
+            data.firstName,
+            data.lastName,
+            data.guestNumber,
+            data.dateFrom,
+            data.dateTo).subscribe(() => {
+              loadingEl.dismiss();
+            });
+        });
       }
     });
   }

@@ -47,8 +47,8 @@ export class CreateBookingComponent implements OnInit {
       firstName: values['first-name'],
       lastName: values['last-name'],
       guestNumber: values['guest-number'],
-      startDate: values['date-from'],
-      endDate: values['date-to']
+      startDate: new Date(values['date-from']),
+      endDate: new Date(values['date-to'])
     }}, 'confirm');
   }
 
