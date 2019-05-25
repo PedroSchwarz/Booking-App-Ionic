@@ -11,6 +11,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 })
 export class BookingsPage implements OnInit, OnDestroy {
   loadedBookings: Booking[] = [];
+  isLoading = false;
   bookingsSub: Subscription;
 
   constructor(private bookingsService: BookingsService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
@@ -18,6 +19,13 @@ export class BookingsPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.bookingsSub = this.bookingsService.bookings.subscribe(bookings => {
       this.loadedBookings = bookings;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.bookingsService.fetchBookings().subscribe(() => {
+      this.isLoading = false;
     });
   }
 

@@ -35,10 +35,6 @@ const routes: Routes = [
                     {
                         path: ':offerId/edit',
                         loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
-                    },
-                    {
-                        path: ':offerId',
-                        loadChildren: './offers/offer-booking/offer-booking.module#OfferBookingPageModule'
                     }
                 ]
             },
