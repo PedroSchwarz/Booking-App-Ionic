@@ -1,0 +1,7 @@
+{
+  "appId": "com.pedroschwarz.bookingapp",
+  "appName": "Booking-App-Ionic",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PlacesService } from '../../places.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { Plugins, Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-new-offer',
@@ -11,6 +12,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class NewOfferPage implements OnInit {
   form: FormGroup;
+  userLocation: any;
 
   constructor(private placesService: PlacesService, private router: Router, private loadingCtrl: LoadingController) { }
 
@@ -39,8 +41,22 @@ export class NewOfferPage implements OnInit {
     });
   }
 
+  onLocateUser(){
+    if (!Capacitor.isPluginAvailable('Geolocation')) {
+      return;
+    } else {
+      Plugins.Geolocation.getCurrentPosition()
+        .then(geoLocation => {
+          this.userLocation = geoLocation.coords;
+        })
+        .catch(err => {
+          return;
+        });
+    }
+  }
+
   onCreateOffer() {
-    if (!this.form.valid) {
+    if (!this.form.valid || !this.userLocation) {
       return;
     } else {
       const values = this.form.value;

@@ -1,5 +1,7 @@
 {
   "name": "Booking-App-Ionic",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
