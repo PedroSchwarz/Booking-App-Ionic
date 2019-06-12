@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { NewOfferPage } from './new-offer.page';
-import { ImagePickerComponent } from 'src/app/shared/pickers/image-picker/image-picker.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,8 +20,9 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ],
-  declarations: [NewOfferPage, ImagePickerComponent]
+  declarations: [NewOfferPage]
 })
 export class NewOfferPageModule {}

@@ -1,3 +1,23 @@
-<p>
-  image-picker works!
-</p>
+<ion-row>
+  <ion-col size-sm="8" offset-sm="2">
+    <ion-button color="primary" expand="block" (click)="onPickImage()">
+      <ion-label>
+        <p>Pick Image</p>
+      </ion-label>
+      <ion-icon name="image" slot="end"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col size-sm="8" offset-sm="2" text-center>
+    <ion-img class="image" *ngIf="selectedImage" [src]="selectedImage"></ion-img>
+    <ion-label *ngIf="!selectedImage" text-center>
+      <p>Your image will be displayed here.</p>
+    </ion-label>
+  </ion-col>
+</ion-row>
+<ion-row class="file-input-container" *ngIf="usePicker">
+  <ion-col size-sm="8" offset-sm="2">
+    <input type="file" accept="image/jpeg" #filePicker (change)="onFileChosen($event)" />
+  </ion-col>
+</ion-row>
