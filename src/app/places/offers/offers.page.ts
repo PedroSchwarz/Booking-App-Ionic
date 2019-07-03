@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlacesService } from '../places.service';
 import { Place } from '../place.model';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-offers',
@@ -13,11 +14,11 @@ export class OffersPage implements OnInit, OnDestroy {
   isLoading = false;
   private offersSub: Subscription;
 
-  constructor(private placesService: PlacesService) { }
+  constructor(private placesService: PlacesService, private authService: AuthService) { }
 
   ngOnInit() {
     this.offersSub = this.placesService.places.subscribe(places => {
-      this.loadedOffers = places;
+      this.loadedOffers = places.filter(place => place.userId === this.authService.userId);
     });
   }
 

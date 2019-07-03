@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.pedroschwarz.bookingapp",
   "appName": "Booking-App-Ionic",
   "bundledWebRuntime": false,
   "npmClient": "npm",

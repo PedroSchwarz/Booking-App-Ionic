@@ -10,7 +10,7 @@
 </ion-row>
 <ion-row>
   <ion-col size-sm="8" offset-sm="2" text-center>
-    <ion-img class="image" *ngIf="selectedImage" [src]="selectedImage"></ion-img>
+    <img *ngIf="selectedImage" [src]="selectedImage"/>
     <ion-label *ngIf="!selectedImage" text-center>
       <p>Your image will be displayed here.</p>
     </ion-label>
